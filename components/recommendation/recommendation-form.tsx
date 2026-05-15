@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { AlertCircle, ArrowRight, Clock3, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { AlertCircle, ArrowRight, BrainCircuit, Clock3, ListMusic, PenLine, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +18,7 @@ import type { Recommendation } from "@/types/recommendation";
 import { cn } from "@/lib/utils";
 
 export function RecommendationForm() {
+  const pathname = usePathname();
   const [text, setText] = useState("");
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState("");
@@ -30,6 +33,11 @@ export function RecommendationForm() {
   const charCount = text.length;
   const trimmedText = text.trim();
   const isTooShort = trimmedText.length > 0 && trimmedText.length < 12;
+
+  if (pathname === "/") {
+    return <LandingFallback />;
+  }
+
   async function handleSubmit() {
     setError("");
     if (trimmedText.length < 12) {
@@ -176,5 +184,69 @@ export function RecommendationForm() {
 
       <NowPlayingWidget song={recommendations[0]} />
     </>
+  );
+}
+
+function LandingFallback() {
+  const steps = [
+    {
+      icon: PenLine,
+      title: "Write naturally",
+      description: "Tulis curhat apa adanya, dalam bahasa sehari-hari."
+    },
+    {
+      icon: BrainCircuit,
+      title: "Match semantics",
+      description: "SBERT membandingkan makna curhat dengan embedding lirik."
+    },
+    {
+      icon: ListMusic,
+      title: "Get Top 10",
+      description: "Moodfy menampilkan lagu paling dekat beserta skor similarity."
+    }
+  ];
+
+  return (
+    <section className="px-4 pb-24 pt-32">
+      <div className="container max-w-6xl">
+        <div className="max-w-4xl">
+          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] px-3 py-1 text-sm text-muted-foreground">
+            <BrainCircuit className="h-4 w-4 text-primary" />
+            SBERT semantic lyric similarity
+          </p>
+          <h1 className="text-6xl font-semibold leading-[0.95] tracking-tight text-balance sm:text-7xl lg:text-8xl">
+            Curhat masuk. Lagu yang paham keluar.
+          </h1>
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
+            Moodfy membaca makna emosional dari curhat kamu, lalu mencocokkannya dengan embedding lirik untuk
+            menampilkan Top 10 lagu yang paling dekat secara semantik.
+          </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
+              <Link href="/app">
+                Start Curhat
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <a href="#how-it-works">How it works</a>
+            </Button>
+          </div>
+        </div>
+
+        <div id="how-it-works" className="mt-20 grid gap-4 md:grid-cols-3">
+          {steps.map((item) => {
+            const Icon = item.icon;
+            return (
+              <article key={item.title} className="rounded-2xl border border-foreground/10 bg-[#172033] p-5">
+                <Icon className="h-5 w-5 text-primary" />
+                <h2 className="mt-5 text-lg font-semibold">{item.title}</h2>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.description}</p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }
