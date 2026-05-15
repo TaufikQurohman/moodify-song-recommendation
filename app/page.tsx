@@ -32,16 +32,16 @@ export default function HomePage() {
               SBERT semantic lyric similarity
             </p>
             <h1 className="text-6xl font-semibold leading-[0.95] tracking-tight text-balance sm:text-7xl lg:text-8xl">
-              Curhat masuk. Lagu yang paham keluar.
+              Temukan lagu yang paling dekat dengan perasaanmu.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
-              Moodfy membaca makna emosional dari curhat kamu, lalu mencocokkannya dengan embedding lirik
-              untuk menampilkan Top 10 lagu yang paling dekat secara semantik.
+              Tulis ceritamu dengan jujur. Moodfy memetakan makna emosionalnya, lalu mencocokkannya
+              dengan embedding lirik untuk menampilkan Top 10 lagu yang terasa paling relevan.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link href="/app">
-                  Start Curhat
+                  Mulai Curhat
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
