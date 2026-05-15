@@ -1,3 +1,4 @@
+from functools import lru_cache
 from pathlib import Path
 from urllib.parse import quote_plus
 
@@ -21,14 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent
 DATASET_PATH = BASE_DIR / "data" / "dataset_clean.csv"
 EMBEDDING_PATH = BASE_DIR / "embeddings" / "hasil_lyricsEmbedding.npy"
 
-model, songs_df, lyric_embeddings = load_assets(
-    dataset_path=str(DATASET_PATH),
-    embedding_path=str(EMBEDDING_PATH),
-)
-
 
 class RecommendRequest(BaseModel):
     text: str
+
+
+@lru_cache(maxsize=1)
+def get_assets():
+    return load_assets(
+        dataset_path=str(DATASET_PATH),
+        embedding_path=str(EMBEDDING_PATH),
+    )
 
 
 def build_thumbnail(title: str, artist: str, rank: int) -> str:
@@ -57,6 +61,7 @@ def recommend(payload: RecommendRequest):
         raise HTTPException(status_code=400, detail="Text is required")
 
     try:
+        model, songs_df, lyric_embeddings = get_assets()
         result_df = recommend_songs(
             payload.text,
             model,
