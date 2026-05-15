@@ -1,38 +1,98 @@
-# Backend Assets
+# Moodfy Backend
 
-Taruh file sistem rekomendasi NLP kamu di folder ini.
+FastAPI service for Moodfy recommendation inference.
 
-Struktur:
+The backend loads the completed NLP assets:
+
+- dataset: `backend/data/dataset_clean.csv`
+- embedding: `backend/embeddings/hasil_lyricsEmbedding.npy`
+- recommender module: `backend/models/recommender.py`
+
+## Folder Structure
 
 ```txt
 backend/
   data/
-    dataset_lagu.csv
+    dataset_clean.csv
   embeddings/
-    lyric_embeddings.npy
+    hasil_lyricsEmbedding.npy
   models/
     recommender.py
   main.py
   requirements.txt
+  railway.json
 ```
 
-Catatan:
-
-- `data/` untuk dataset lagu, metadata, dan hasil preprocessing.
-- `embeddings/` untuk file embedding `.npy`.
-- `models/` untuk `recommender.py` atau modul rekomendasi Python.
-- `main.py` nanti bisa dipakai untuk FastAPI/Flask endpoint `/api/recommend`.
-
-Frontend Next.js tidak membaca file `.csv` atau `.npy` langsung. Frontend hanya memanggil endpoint backend melalui:
-
-```env
-RECOMMENDATION_BACKEND_URL=http://localhost:8000/api/recommend
-```
-
-Run backend:
+## Run Locally
 
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
+python -m uvicorn main:app --reload --port 8000
+```
+
+Open API docs:
+
+```txt
+http://localhost:8000/docs
+```
+
+Health check:
+
+```txt
+http://localhost:8000/health
+```
+
+## Endpoints
+
+```txt
+GET /
+GET /health
+POST /api/recommend
+```
+
+`POST /api/recommend` expects:
+
+```json
+{
+  "text": "user curhat"
+}
+```
+
+and returns:
+
+```json
+{
+  "recommendations": [
+    {
+      "title": "Song title",
+      "artist": "Artist",
+      "similarity": 0.92,
+      "thumbnail": "https://...",
+      "lyrics_snippet": "Short lyric snippet",
+      "youtube_url": "https://youtube.com/...",
+      "emotion": "sad"
+    }
+  ]
+}
+```
+
+## Railway
+
+Set the backend service root directory to:
+
+```txt
+backend
+```
+
+Railway uses `backend/railway.json`:
+
+```json
+{
+  "deploy": {
+    "startCommand": "python -m uvicorn main:app --host 0.0.0.0 --port $PORT",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300
+  }
+}
 ```

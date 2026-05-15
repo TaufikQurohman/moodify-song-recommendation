@@ -12,7 +12,11 @@ app = FastAPI(title="Moodfy API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://moodify-song-recommendation-production.up.railway.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,6 +29,16 @@ EMBEDDING_PATH = BASE_DIR / "embeddings" / "hasil_lyricsEmbedding.npy"
 
 class RecommendRequest(BaseModel):
     text: str
+
+
+@app.get("/")
+def root():
+    return {
+        "name": "Moodfy API",
+        "status": "ok",
+        "health": "/health",
+        "recommend": "/api/recommend",
+    }
 
 
 @lru_cache(maxsize=1)
