@@ -20,3 +20,4 @@ dev-server*.log
 .codex
 __pycache__
 *.pyc
+.cache

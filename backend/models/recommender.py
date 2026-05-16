@@ -11,13 +11,17 @@ Penggunaan di app.py (Streamlit):
 """
 
 import re
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
-MODEL_NAME     = "paraphrase-multilingual-MiniLM-L12-v2"
-DATASET_PATH   = "dataset_clean.csv"
+BASE_DIR = Path(__file__).resolve().parents[1]
+MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"
+MODEL_CACHE_DIR = BASE_DIR / ".cache" / "sentence-transformers"
+DATASET_PATH = "dataset_clean.csv"
 EMBEDDING_PATH = "hasil_lyricsEmbedding.npy"
 
 
@@ -34,7 +38,7 @@ def load_assets(
         df                 : pd.DataFrame (dataset lagu)
         lyrics_embeddings  : np.ndarray (pre-computed)
     """
-    model = SentenceTransformer(MODEL_NAME, device="cpu")
+    model = SentenceTransformer(MODEL_NAME, device="cpu", cache_folder=str(MODEL_CACHE_DIR))
     df = pd.read_csv(dataset_path)
     lyrics_embeddings = np.load(embedding_path)
 
