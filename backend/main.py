@@ -56,16 +56,14 @@ def get_assets():
 
 @app.on_event("startup")
 def warm_up_assets():
-    def load_in_background():
-        global ASSETS_ERROR
+    global ASSETS_ERROR
 
-        try:
-            get_assets()
-            ASSETS_READY.set()
-        except Exception as error:
-            ASSETS_ERROR = str(error)
-
-    threading.Thread(target=load_in_background, daemon=True).start()
+    try:
+        get_assets()
+        ASSETS_READY.set()
+    except Exception as error:
+        ASSETS_ERROR = str(error)
+        raise  # Re-raise so healthcheck fails if assets fail to load
 
 
 def build_thumbnail(title: str, artist: str, rank: int) -> str:
