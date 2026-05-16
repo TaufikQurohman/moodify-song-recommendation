@@ -49,6 +49,11 @@ def get_assets():
     )
 
 
+@app.on_event("startup")
+def warm_up_assets():
+    get_assets()
+
+
 def build_thumbnail(title: str, artist: str, rank: int) -> str:
     seed = quote_plus(f"{title}-{artist}-{rank}")
     return f"https://picsum.photos/seed/{seed}/480/480"
