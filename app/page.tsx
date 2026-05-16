@@ -15,7 +15,7 @@ export default function HomePage() {
                 <Music2 className="h-5 w-5" />
               </span>
               <span>
-                <span className="block text-lg font-semibold leading-none">Moodfy</span>
+                <span className="block text-lg font-semibold leading-none">Melorasa</span>
                 <span className="mt-1 block text-xs uppercase tracking-[0.18em] text-muted-foreground">
                   AI Song Recommendation
                 </span>
@@ -35,7 +35,7 @@ export default function HomePage() {
               Temukan lagu yang paling dekat dengan perasaanmu.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
-              Tulis ceritamu dengan jujur. Moodfy memetakan makna emosionalnya, lalu mencocokkannya
+              Tulis ceritamu dengan jujur. Melorasa memetakan makna emosionalnya, lalu mencocokkannya
               dengan embedding lirik untuk menampilkan Top 10 lagu yang terasa paling relevan.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">

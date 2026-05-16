@@ -3,14 +3,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Moodfy | AI Song Recommendation",
-    template: "%s | Moodfy"
+    default: "Melorasa | AI Song Recommendation",
+    template: "%s | Melorasa"
   },
   description:
     "A semantic music discovery experience that recommends songs from emotional confessions using SBERT lyric similarity.",
   keywords: ["music recommendation", "SBERT", "semantic similarity", "NLP", "curhat", "song discovery"],
   openGraph: {
-    title: "Moodfy",
+    title: "Melorasa",
     description: "Find songs that understand the feeling behind your words.",
     type: "website"
   }
