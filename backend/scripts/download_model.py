@@ -9,8 +9,8 @@ from models.recommender import MODEL_CACHE_DIR, MODEL_NAME
 
 
 def main() -> None:
-    MODEL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    SentenceTransformer(MODEL_NAME, device="cpu", cache_folder=str(MODEL_CACHE_DIR))
+    Path(MODEL_CACHE_DIR).mkdir(parents=True, exist_ok=True)
+    SentenceTransformer(MODEL_NAME, device="cpu", cache_folder=MODEL_CACHE_DIR)
     print(f"Downloaded {MODEL_NAME} to {MODEL_CACHE_DIR}")
 
 

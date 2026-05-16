@@ -10,6 +10,7 @@ Penggunaan di app.py (Streamlit):
     results = recommend(curhat_text, model, df, lyrics_embeddings)
 """
 
+import os
 import re
 from pathlib import Path
 
@@ -20,7 +21,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"
-MODEL_CACHE_DIR = BASE_DIR / ".cache" / "sentence-transformers"
+# Use HuggingFace's standard cache directory (~/.cache/huggingface)
+# This is where download_model.py caches the model during build
+MODEL_CACHE_DIR = os.path.expanduser("~/.cache/huggingface")
 DATASET_PATH = "dataset_clean.csv"
 EMBEDDING_PATH = "hasil_lyricsEmbedding.npy"
 
@@ -38,7 +41,7 @@ def load_assets(
         df                 : pd.DataFrame (dataset lagu)
         lyrics_embeddings  : np.ndarray (pre-computed)
     """
-    model = SentenceTransformer(MODEL_NAME, device="cpu", cache_folder=str(MODEL_CACHE_DIR))
+    model = SentenceTransformer(MODEL_NAME, device="cpu", cache_folder=MODEL_CACHE_DIR)
     df = pd.read_csv(dataset_path)
     lyrics_embeddings = np.load(embedding_path)
 
