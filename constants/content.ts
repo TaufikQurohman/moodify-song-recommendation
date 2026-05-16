@@ -1,7 +1,7 @@
 import type { Recommendation } from "@/types/recommendation";
 
 export const appConfig = {
-  name: "Melorasa",
+  name: "Ventify",
   subtitle: "AI Song Recommendation",
   tagline: "Find songs that understand what your words cannot finish.",
   maxCharacters: 1200,

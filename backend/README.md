@@ -1,6 +1,6 @@
-# Moodfy Backend
+# Ventify Backend
 
-FastAPI service for Moodfy recommendation inference.
+FastAPI service for Ventify recommendation inference.
 
 The backend loads the completed NLP assets:
 

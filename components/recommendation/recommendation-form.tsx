@@ -202,7 +202,7 @@ function LandingFallback() {
     {
       icon: ListMusic,
       title: "Get Top 10",
-      description: "Melorasa menampilkan lagu paling dekat beserta skor similarity."
+      description: `${appConfig.name} menampilkan lagu paling dekat beserta skor similarity.`
     }
   ];
 
@@ -218,7 +218,7 @@ function LandingFallback() {
             Temukan lagu yang paling dekat dengan perasaanmu.
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
-            Tulis ceritamu dengan jujur. Melorasa memetakan makna emosionalnya, lalu mencocokkannya dengan
+            Tulis ceritamu dengan jujur. {appConfig.name} memetakan makna emosionalnya, lalu mencocokkannya dengan
             embedding lirik untuk menampilkan Top 10 lagu yang terasa paling relevan.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">

@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 from models.recommender import load_assets, recommend as recommend_songs
 
-app = FastAPI(title="Moodfy API")
+app = FastAPI(title="Ventify API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,7 +34,7 @@ class RecommendRequest(BaseModel):
 @app.get("/")
 def root():
     return {
-        "name": "Moodfy API",
+        "name": "Ventify API",
         "status": "ok",
         "health": "/health",
         "recommend": "/api/recommend",

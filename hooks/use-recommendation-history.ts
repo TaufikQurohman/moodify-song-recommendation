@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import type { Recommendation, RecommendationHistoryItem } from "@/types/recommendation";
 
-const STORAGE_KEY = "moodfy-history";
+const STORAGE_KEY = "ventify-history";
 
 interface RecommendationHistoryState {
   history: RecommendationHistoryItem[];

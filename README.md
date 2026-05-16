@@ -1,8 +1,8 @@
-# Moodfy
+# Ventify
 
 **AI Song Recommendation**
 
-Moodfy is an emotional music recommendation platform. Users write a short curhat or confession text, then the app recommends Top-10 songs whose lyrics are semantically close to the user's feeling.
+Ventify is an emotional music recommendation platform. Users write a short curhat or confession text, then the app recommends Top-10 songs whose lyrics are semantically close to the user's feeling.
 
 The NLP recommendation engine is handled by the backend using:
 
@@ -30,7 +30,7 @@ The NLP recommendation engine is handled by the backend using:
 
 ## Main Features
 
-- Landing page for Moodfy
+- Landing page for Ventify
 - Curhat input page at `/app`
 - Character counter and example prompts
 - Top-10 song recommendations
