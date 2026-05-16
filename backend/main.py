@@ -1,3 +1,4 @@
+import threading
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import quote_plus
@@ -25,6 +26,9 @@ app.add_middleware(
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_PATH = BASE_DIR / "data" / "dataset_clean.csv"
 EMBEDDING_PATH = BASE_DIR / "embeddings" / "hasil_lyricsEmbedding.npy"
+ASSETS_READY = threading.Event()
+ASSETS_LOCK = threading.Lock()
+ASSETS_ERROR: str | None = None
 
 
 class RecommendRequest(BaseModel):
@@ -43,15 +47,25 @@ def root():
 
 @lru_cache(maxsize=1)
 def get_assets():
-    return load_assets(
-        dataset_path=str(DATASET_PATH),
-        embedding_path=str(EMBEDDING_PATH),
-    )
+    with ASSETS_LOCK:
+        return load_assets(
+            dataset_path=str(DATASET_PATH),
+            embedding_path=str(EMBEDDING_PATH),
+        )
 
 
 @app.on_event("startup")
 def warm_up_assets():
-    get_assets()
+    def load_in_background():
+        global ASSETS_ERROR
+
+        try:
+            get_assets()
+            ASSETS_READY.set()
+        except Exception as error:
+            ASSETS_ERROR = str(error)
+
+    threading.Thread(target=load_in_background, daemon=True).start()
 
 
 def build_thumbnail(title: str, artist: str, rank: int) -> str:
@@ -78,6 +92,12 @@ def map_emotion(row: dict) -> str:
 def recommend(payload: RecommendRequest):
     if not payload.text.strip():
         raise HTTPException(status_code=400, detail="Text is required")
+
+    if ASSETS_ERROR:
+        raise HTTPException(status_code=503, detail="Recommendation assets failed to load")
+
+    if not ASSETS_READY.is_set():
+        raise HTTPException(status_code=503, detail="Recommendation assets are still warming up")
 
     try:
         model, songs_df, lyric_embeddings = get_assets()
@@ -123,4 +143,4 @@ def recommend(payload: RecommendRequest):
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "assets_ready": ASSETS_READY.is_set()}
