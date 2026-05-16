@@ -13,7 +13,7 @@ The NLP recommendation engine is handled by the backend using:
 
 ## Live Links
 
-- Frontend: https://moodify-song-recommendation-production.up.railway.app
+- Frontend: https://ventify.up.railway.app
 - Backend API: https://zesty-wholeness-production-80d3.up.railway.app
 - Backend health check: https://zesty-wholeness-production-80d3.up.railway.app/health
 
@@ -174,7 +174,7 @@ Backend Railway service:
 Check frontend landing:
 
 ```bash
-curl https://moodify-song-recommendation-production.up.railway.app/
+curl https://ventify.up.railway.app/
 ```
 
 Check backend health:
