@@ -22,9 +22,6 @@ export default function HomePage() {
                 </span>
               </span>
             </Link>
-            <Button asChild variant="outline">
-              <Link href="/app">Open App</Link>
-            </Button>
           </nav>
 
           <div className="max-w-4xl">

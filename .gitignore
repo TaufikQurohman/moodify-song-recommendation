@@ -16,6 +16,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 dev-server*.log
+*-local*.log
 
 .codex
 __pycache__
